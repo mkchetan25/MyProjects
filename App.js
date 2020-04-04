@@ -6,47 +6,27 @@
  * @flow strict-local
  */
 
-import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Dimensions
-} from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import React, {Component} from 'react';
+import {View, Dimensions, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Homescreen from './components/Homescreen';
 import Aboutscreen from './components/Aboutscreen';
 
-const { width: viewportWidth } = Dimensions.get('window');
+const {width: viewportWidth} = Dimensions.get('window');
+
+const Stack = createStackNavigator();
 
 export default class App extends Component {
   render() {
     return (
-      <View style={{width: viewportWidth}}>
-        <AppContainer style={{width: viewportWidth}}></AppContainer>
-      </View>
-    )
+      <NavigationContainer style={{width: viewportWidth}}>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Homescreen} />
+          <Stack.Screen name="About" component={Aboutscreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
 }
-
-const AppNavigator = createStackNavigator({
-  Home: {screen: Homescreen},
-  About: {screen: Aboutscreen}
-}, {
-  initialRouteName: "Home"
-});
-
-const AppContainer = createAppContainer(AppNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

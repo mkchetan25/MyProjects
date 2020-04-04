@@ -1,21 +1,39 @@
-import React, { Component } from 'react';
-import { Button, View, Text, Dimensions } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import React, {Component} from 'react';
+import {Button, View, Text, Dimensions, StyleSheet} from 'react-native';
 
-const { width: viewportWidth } = Dimensions.get('window');
+const {width: viewportWidth} = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  box: {
+    width: 80,
+    height: 80,
+    backgroundColor: "red",
+  },
+});
 
 export default class Aboutscreen extends Component {
-    render () {
-        return (
-            <View ref="myView1">
-                <Text> About Screen </Text>
-            </View>
-        )
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount() {
-        this.refs.myView1.measureInWindow((x,y,width,height) => {
-            console.log(x,y,width,height)
-        });
-    }
+  _onLayout = ({
+    nativeEvent: {
+      layout: {x, y, width, height},
+    },
+  }) => {
+    console.log("x", x);
+    console.log("y", y);
+    console.log("width", width);
+    console.log("height", height);
+  };
+  render() {
+    return (
+      <View ref={this.myView1}>
+        <View style={styles.box} onLayout={this._onLayout} />
+      </View>
+    );
+  }
 }
